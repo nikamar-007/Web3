@@ -1,8 +1,36 @@
 <?php
 $pageTitle = "Главная — Моё лето в Чечне";
 $current = "index";
-include __DIR__."/inc/header.php";
 ?>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><?php echo htmlspecialchars($pageTitle); ?></title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1 class="text-gradient">Моё лето в Чечне</h1>
+</header>
+
+<nav>
+  <?php $name='Главная'; $link='index.php'; $isActive=($current==='index'); ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+  <?php $name='Места'; $link='index.php#places'; $isActive=false; ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+  <?php $name='Мои впечатления'; $link='index.php#impressions'; $isActive=false; ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+  <?php $name='Обратная связь'; $link='feedback.php'; $isActive=($current==='feedback'); ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+  <?php $name='Аутентификация'; $link='login.php'; $isActive=($current==='login'); ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+  <?php $name='Контакты'; $link='#contacts'; $isActive=false; ?>
+  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
+</nav>
+
+<main class="container">?>
 <section id="main" class="intro">
   <h2>Главная</h2>
   <p>Я чеченка, но уже давно не посещала родину, поэтому этот визит оставил много эмоций. Этим летом 2025 года я вернулась в Чечню, чтобы навестить бабушку и вновь вдохнуть воздух родных гор. Я посетила семь мест, которые напомнили мне, почему Чечня так дорога моему сердцу. Вот что я узнала о них.</p>
@@ -69,4 +97,19 @@ include __DIR__."/inc/header.php";
   ?>
 </section>
 
-<?php include __DIR__."/inc/footer.php"; ?>
+<section id="contacts">
+  <footer>
+    <p>Связь: <a href="mailto:maryamnikaeva19@gmail.com">maryamnikaeva19@gmail.com</a></p>
+  </footer>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Моё лето в Чечне</p>
+    <p><a href="feedback.php">Обратная связь</a> · <a href="index.php">Главная</a></p>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>

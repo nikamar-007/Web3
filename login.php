@@ -26,4 +26,16 @@ include __DIR__."/inc/header.php";
   </div>
 </form>
 </section>
-<?php include __DIR__."/inc/footer.php"; ?>
+
+<section id="contacts">
+  <footer>
+    <p>Связь: <a href="mailto:maryamnikaeva19@gmail.com">maryamnikaeva19@gmail.com</a></p>
+  </footer>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Моё лето в Чечне</p>
+    <p><a href="feedback.php">Обратная связь</a></p>
+  </div>
+</footer>
