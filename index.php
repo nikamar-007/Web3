@@ -1,115 +1,122 @@
+<?php $page_id='index'; $page_title='Никаева Марьям Руслановна 241-362, Лабораторная работа 3'; ?>
 <?php
-$pageTitle = "Главная — Моё лето в Чечне";
-$current = "index";
+date_default_timezone_set('Europe/Moscow');         
+if (!isset($page_id))    $page_id = 'index';
+if (!isset($page_title)) $page_title = 'Моё лето в Чечне';
+
+$menu = [
+  ['id'=>'index',    'href'=>'./index.php',              'text'=>'Главная'],
+  ['id'=>'places',   'href'=>'./index.php#places',       'text'=>'Места'],
+  ['id'=>'impr',     'href'=>'./index.php#impressions',  'text'=>'Впечатления'],
+  ['id'=>'feedback', 'href'=>'./feedback.php',           'text'=>'Обратная связь'],
+  ['id'=>'login',    'href'=>'./login.php',              'text'=>'Аутентификация'],
+  ['id'=>'contacts', 'href'=>'#contacts',                'text'=>'Контакты'],
+];
+
+function photo_by_second(string $baseName): string {
+    $sec = (int)date('s');
+    $suf  = ($sec % 2 === 0) ? 'a' : 'b';
+    $candidates = [$baseName . $suf . '.jpg', $baseName . '.jpg', $baseName . $suf . '.png', $baseName . '.png',];
+    foreach ($candidates as $rel) {
+        $fs = __DIR__ . '/' . ltrim($rel, '/');
+        if (file_exists($fs)) return $rel;
+    }
+    return $baseName . $suf . '.jpg'; 
+}
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?php echo htmlspecialchars($pageTitle); ?></title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><?= htmlspecialchars($page_title) ?></title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <header>
-  <h1 class="text-gradient">Моё лето в Чечне</h1>
+  <div class="head-wrap">
+    <h1 class="text-gradient">Моё лето в Чечне</h1>
+    <nav>
+      <?php foreach ($menu as $i): $isActive = ($page_id === $i['id']); ?>
+        <a href="<?= $i['href'] ?>" class="<?= $isActive ? 'active' : '' ?>"><?= htmlspecialchars($i['text']) ?></a>
+      <?php endforeach; ?>
+    </nav>
+  </div>
 </header>
+<main class="container">
 
-<nav>
-  <?php $name='Главная'; $link='index.php'; $isActive=($current==='index'); ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-  <?php $name='Места'; $link='index.php#places'; $isActive=false; ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-  <?php $name='Мои впечатления'; $link='index.php#impressions'; $isActive=false; ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-  <?php $name='Обратная связь'; $link='feedback.php'; $isActive=($current==='feedback'); ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-  <?php $name='Аутентификация'; $link='login.php'; $isActive=($current==='login'); ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-  <?php $name='Контакты'; $link='#contacts'; $isActive=false; ?>
-  <a href="<?php echo $link; ?>"><?php if($isActive) echo ' class="selected_menu"'; echo $name; ?></a>
-</nav>
-
-<main class="container">?>
 <section id="main" class="intro">
-  <h2>Главная</h2>
-  <p>Я чеченка, но уже давно не посещала родину, поэтому этот визит оставил много эмоций. Этим летом 2025 года я вернулась в Чечню, чтобы навестить бабушку и вновь вдохнуть воздух родных гор. Я посетила семь мест, которые напомнили мне, почему Чечня так дорога моему сердцу. Вот что я узнала о них.</p>
+  <h2>О проекте</h2>
+  <p>Этим летом я посетила Чечню и собрала впечатления о любимых местах. На сайте — фото, краткие заметки и полезные советы.</p>
+  <h2>Советы путешественнику</h2>
+  <ul>
+    <?php $tips = [
+        'Планируйте маршруты заранее: связь в горах нестабильна.',
+        'Удобная обувь и лёгкая куртка обязательны.',
+        'Соблюдайте местные традиции и дресс-код.',
+        'Возьмите наличные: карты принимают не везде.',
+        'Останавливайтесь на смотровых площадках — виды потрясающие.',
+      ];
+      foreach ($tips as $tip): ?>
+      <li><?= htmlspecialchars($tip) ?></li>
+    <?php endforeach; ?>
+  </ul>
 </section>
 
 <section id="places">
   <h2>Места, которые я посетила</h2>
   <div class="places">
-    <div class="place">
-      <img src="web2/images/1.jpg" alt="Нихалойские водопады">
-      <h3>Нихалойские водопады</h3>
-      <p>Каскад водопадов на притоке реки Чанти-Аргун в Шатойском районе. Самый высокий водопад достигает 32 метров, а для туристов обустроены лестницы и переходы.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/2.jpg" alt="Лестница в небеса">
-      <h3>Лестница в небеса</h3>
-      <p>Смотровая площадка в Итум-Калинском районе, известная захватывающими видами на Аргунское ущелье, особенно на закате.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/3.jpg" alt="Мечеть Сердце Чечни">
-      <h3>Мечеть &laquo;Сердце Чечни&raquo;</h3>
-      <p>Одна из крупнейших мечетей мира в Грозном, площадью 5000 м², украшенная мрамором и резьбой, окружённая живописным парком.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/4.jpg" alt="Курорт Ведучи">
-      <h3>Курорт Ведучи</h3>
-      <p>Горнолыжный курорт и летние тропы в сердце гор — уют и драйв в любое время года.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/5.jpg" alt="Английский замок">
-      <h3>Английский замок</h3>
-      <p>Архитектурная жемчужина в неоготическом стиле с чеченским характером.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/6.jpg" alt="Ушкалойские башни">
-      <h3>Ушкалойские башни</h3>
-      <p>Средневековые сторожевые башни в Аргунском ущелье, высотой около 12 метров, служившие для контроля торговых путей.</p>
-    </div>
-    <div class="place">
-      <img src="web2/images/7.jpg" alt="Озеро Кезеной-Ам">
-      <h3>Озеро Кезеной-Ам</h3>
-      <p>Самое большое озеро Северного Кавказа на высоте 1869 м, с глубиной до 74 м и кристально чистой водой.</p>
-    </div>
+    <?php
+      $places = [
+        ['name'=>'Нихалойские водопады','desc'=>'Каскад водопадов на притоке реки Чанти-Аргун.','base'=>'web2/images/1'],
+        ['name'=>'Лестница в небеса','desc'=>'Смотровая площадка с видом на Аргунское ущелье.','base'=>'web2/images/2'],
+        ['name'=>'Мечеть «Сердце Чечни»','desc'=>'Одна из крупнейших мечетей мира в Грозном.','base'=>'web2/images/3'],
+        ['name'=>'Курорт Ведучи','desc'=>'Горнолыжный курорт с современными трассами.','base'=>'web2/images/4'],
+        ['name'=>'Английский замок','desc'=>'Готическая архитектура с национальным колоритом.','base'=>'web2/images/5'],
+        ['name'=>'Ушкалойские башни','desc'=>'Средневековые сторожевые башни.','base'=>'web2/images/6'],
+        ['name'=>'Озеро Кезеной-Ам','desc'=>'Самое большое озеро Северного Кавказа.','base'=>'web2/images/7'],
+      ];
+      foreach ($places as $p):
+        $img = photo_by_second($p['base']);
+    ?>
+      <div class="place">
+        <img src="<?= $img ?>" alt="<?= htmlspecialchars($p['name']) ?>" />
+        <h3><?= htmlspecialchars($p['name']) ?></h3>
+        <p><?= htmlspecialchars($p['desc']) ?></p>
+      </div>
+    <?php endforeach; ?>
   </div>
 </section>
 
 <section id="impressions">
   <h2>Мои впечатления</h2>
-  <?php
-  $rows = [
-    ["Нихалойские водопады","Шатойский район, Нихалойское сельское поселение, село Нихалой","Шум водопада и горы подарили покой."],
-    ["Лестница в небеса","Байсангуровский район","Подъём трудный, но виды вдохновляют."],
-    ["Мечеть «Сердце Чечни»","просп. Хусейна Исаева, 90","Величие мечети вернуло чувство дома."],
-    ["Курорт Ведучи","Итум-Калинский район, Ведучинское сельское поселение, село Ведучи","Горы и уют — место для души."],
-    ["Английский замок","ул. Братьев Дубининых, 23","Сказочный вид с чеченским характером."],
-    ["Ушкалойские башни","Итум-Калинский район, Чиннахойское сельское поселение, село Чиннах","История предков тронула до слёз."],
-    ["Озеро Кезеной-Ам","Веденский район","Кристальная вода и горы — умиротворение."]
-  ];
-  echo "<table><thead><tr><th>Место</th><th>Адрес</th><th>Моё впечатление</th></tr></thead><tbody>";
-  foreach($rows as $r){
-    echo "<tr><td>".htmlspecialchars($r[0])."</td><td>".htmlspecialchars($r[1])."</td><td>".htmlspecialchars($r[2])."</td></tr>";
-  }
-  echo "</tbody></table>";
-  ?>
+  <table>
+    <thead><tr><th>Место</th><th>Адрес</th><th>Моё впечатление</th></tr></thead>
+    <tbody>
+      <tr><td>Нихалойские водопады</td><td>Шатойский район, Нихалой</td><td>Шум воды и горный воздух дарят покой.</td></tr>
+      <tr><td>Лестница в небеса</td><td>Итум-Калинский район</td><td>Подъём трудный, но обзор вдохновляет.</td></tr>
+      <tr><td>Мечеть «Сердце Чечни»</td><td>просп. Хусейна Исаева, 90</td><td>Величие и спокойствие.</td></tr>
+      <tr><td>Курорт Ведучи</td><td>с. Ведучи</td><td>Горы и уют — место для души.</td></tr>
+      <tr><td>Английский замок</td><td>ул. Братьев Дубининых, 23</td><td>Сказочный вид с национальным характером.</td></tr>
+      <tr><td>Ушкалойские башни</td><td>с. Чиннах</td><td>История предков трогает до слёз.</td></tr>
+      <tr><td>Озеро Кезеной-Ам</td><td>Веденский район</td><td>Тишина и прозрачная вода.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section id="contacts">
-  <footer>
-    <p>Связь: <a href="mailto:maryamnikaeva19@gmail.com">maryamnikaeva19@gmail.com</a></p>
-  </footer>
-</section>
-
-<footer>
-  <div class="container">
-    <p>© 2025 Моё лето в Чечне</p>
-    <p><a href="feedback.php">Обратная связь</a> · <a href="index.php">Главная</a></p>
+<section id="contacts" class="contacts">
+  <div class="card">
+    <h2>Контакты</h2>
+    <ul class="contacts-list">
+      <li><strong>Email:</strong> <a href="mailto:maryamnikaeva19@gmail.com">maryamnikaeva19@gmail.com</a></li>
+    </ul>
   </div>
-</footer>
+</section>
 
 </main>
+<footer>
+  <p>Сформировано <?= date('d.m.Y \в H:i:s') ?></p>
+</footer>
 </body>
 </html>
